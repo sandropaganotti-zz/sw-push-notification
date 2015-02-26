@@ -7,28 +7,40 @@
           console.error('Push is not supported, Try Chrome M41.');
           return;
         } else {
-          serviceWorkerRegistration.pushManager.hasPermission().then(
-            function(pushPermissionStatus) {
-              if (pushPermissionStatus !== 'granted') {
-                module.askForPermissions(serviceWorkerRegistration);
-              }
-            });
+          Notification.requestPermission(function(result){
+            if(result === 'granted'){
+              module.manageSubscription(serviceWorkerRegistration);
+            } else {
+              console.error('Please allow Notification')
+            }
+          });
         }
       })
     },
 
-    askForPermissions: function(serviceWorkerRegistration){
+    manageSubscription: function(serviceWorkerRegistration){    
+      serviceWorkerRegistration.pushManager.getSubscription()
+        .then(function(subscription){
+          if(!subscription){
+            module.subscribe(serviceWorkerRegistration);
+          } else {
+            module.updateSubscription(subscription);
+          }
+        });    
+    },
+
+    subscribe: function(serviceWorkerRegistration){
       serviceWorkerRegistration.pushManager.subscribe()
-        .then(function(pushSubscription) {
-          module.updateSubscription();
+        .then(function(subscription) {
+          module.updateSubscription(subscription);
         })
         .catch(function(e) {
           console.error('Unable to register for push', e);
         });
     },
 
-    updateSubscription: function(){
-      console.log('proper subscription logic');
+    updateSubscription: function(subscription){
+        console.log(subscription);
     }
 
   };
