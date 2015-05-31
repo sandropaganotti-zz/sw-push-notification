@@ -8,8 +8,8 @@ self.addEventListener('push', function(e) {
   }
 
   var data = e.data ? e.data.json() : {};
-  var title = data.title || 'Why you no title?';
-  var message = data.message || 'Hello World!....I guess.';
+  var title = data.title || 'A push notification';
+  var message = data.message || 'This comes from the Service Worker!';
 
   return registration.showNotification(title, {
     body: message,
