@@ -2,9 +2,9 @@
   "version": "1.0.0",
   "short_name": "Push notification",
   "name": "Push notification",
-  "start_url": "/",
+  "start_url": "/sw-push-notification/",
   "display": "standalone",
-  "launch_path": "/index.html",
+  "launch_path": "/sw-push-notification/index.html",
   "description": "A demo of the SW push-notification.js",
   "installs_allowed_from": [
     "*"
